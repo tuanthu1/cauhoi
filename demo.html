@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài kiểm tra trắc nghiệm - 126 câu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bài kiểm tra trắc nghiệm - 126 câu</h1>
+    <form id="quizForm"></form>
+    <button onclick="checkAnswers()">Kiểm tra</button>
+    <div id="finalResult" class="result"></div>
+
+    <script>
+        // Mảng chứa tất cả 126 câu hỏi, lựa chọn và đáp án đúng
+        const quizData = [
+            {
+                question: "Một máy tính gồm những thành phần cơ bản nào?",
+                options: [
+                    "A. Bộ nhớ trong, CPU, bộ phận nhập xuất và thiết bị ngoại vi",
+                    "B. Bộ nhớ trong, CPU",
+                    "C. Bộ nhớ trong, bộ phận nhập xuất",
+                    "D. CPU và thiết bị ngoại vi"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Đơn vị nhỏ nhất để đo lượng thông tin là gì?",
+                options: [
+                    "A. Bit",
+                    "B. Terabyte (TB)",
+                    "C. Megabyte (MB)",
+                    "D. Byte (B)"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Thiết bị nào sau đây của máy vi tính là thiết bị dùng để xuất dữ liệu?",
+                options: [
+                    "A. Bàn phím",
+                    "B. Chuột",
+                    "C. Máy quét ảnh",
+                    "D. Màn hình"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Bộ nhớ nào sau đây có thể đọc và ghi dữ liệu?",
+                options: [
+                    "A. ROM",
+                    "B. RAM",
+                    "C. Đáp án A và B đúng",
+                    "D. Đáp án A và B sai"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Phần mềm nào sau đây dùng để tạo ra các bảng tính?",
+                options: [
+                    "A. Microsoft Word",
+                    "B. Microsoft Access",
+                    "C. Microsoft Excel",
+                    "D. Microsoft PowerPoint"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Cổng nào dùng để kết nối bàn phím với máy tính?",
+                options: [
+                    "A. USB",
+                    "B. S-Video",
+                    "C. Firewire",
+                    "D. Ethernet"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Trình ứng dụng nào dưới đây là trình ứng dụng chuẩn được tích hợp sẵn của Windows?",
+                options: [
+                    "A. Paint",
+                    "B. Microsoft Excel",
+                    "C. Microsoft Word",
+                    "D. Microsoft Access"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Biểu tượng nào dưới đây là biểu tượng có sẵn của hệ thống Microsoft Windows?",
+                options: [
+                    "A. Microsoft Excel",
+                    "B. Microsoft Word",
+                    "C. Microsoft PowerPoint",
+                    "D. My Computer"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Chương trình ứng dụng nào tạo ra tập tin có phần mở rộng ngầm định là .txt?",
+                options: [
+                    "A. Notepad",
+                    "B. Microsoft Excel",
+                    "C. Microsoft Word",
+                    "D. Microsoft Access"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Sử dụng điện thoại di động quá mức sẽ ảnh hưởng như thế nào đến sức khỏe của người dùng?",
+                options: [
+                    "A. Sóng điện thoại có thể gây mất ngủ",
+                    "B. Gây tổn thương các khớp xương tay, lưng và cổ",
+                    "C. Ảnh hưởng đến thị lực",
+                    "D. Đáp án A, B, C đều đúng"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Sử dụng thao tác nào sau đây để tải (Download) thông tin từ Internet?",
+                options: [
+                    "A. Cập nhật website",
+                    "B. Tải file đính kèm từ thư điện tử",
+                    "C. Đăng tin trên mạng cục bộ",
+                    "D. Đính kèm file trong thư"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Địa chỉ website nào sau đây là hợp lệ?",
+                options: [
+                    "A. thuathienhue.Fpt.vn",
+                    "B. giaoducdaotao.edu",
+                    "C. www.laodong.com.vn",
+                    "D. hue@FPT.VN"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Địa chỉ email nào là đúng?",
+                options: [
+                    "A. alpha",
+                    "B. alpha@gmail.com",
+                    "C. alpha5@gmail",
+                    "D. Gmail.com@alpha2005"
+                ],
+                correct: "B"
+            },
+            {
+                question: "VOIP là:",
+                options: [
+                    "A. Truyền âm thanh trên giao thức IP",
+                    "B. Truyền hình ảnh trên nền tảng Internet",
+                    "C. Đóng gói dữ liệu",
+                    "D. Ghép các gói âm thanh"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Các chứng bệnh phổ biến của những người nghiện máy tính mắc phải là gì?",
+                options: [
+                    "A. Hội chứng suy giảm miễn dịch mắc phải - AIDS",
+                    "B. Hội chứng trí nhớ siêu phàm - Hyperthymesia",
+                    "C. Hội chứng ống cổ tay, đau thắt lưng, bệnh huyết khối, các bệnh về xương, bệnh trĩ, nhiễm khuẩn, mất ngủ, ảnh hưởng đến da, trầm cảm",
+                    "D. Hội chứng 'không biết sợ' - Bệnh Urbach-Wiethe"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Để phòng tránh những bệnh do ngồi máy tính nhiều, phát biểu nào sau đây là sai?",
+                options: [
+                    "A. Điều chỉnh ánh sáng trong phòng để tránh phản chiếu lên màn hình, chuyển vị trí những đèn có ánh sáng chiếu trực tiếp lên màn hình",
+                    "B. Để tránh đau vùng thắt lưng, bạn phải thường xuyên chỉnh cho mình ngồi đúng tư thế",
+                    "C. Ngồi liên tục trước máy tính không cần nghỉ ngơi, thư giãn vẫn tốt cho sức khỏe",
+                    "D. Thường xuyên lau bàn phím và bề mặt bàn với các dung dịch kháng khuẩn sẽ giúp ngăn ngừa nhiễm khuẩn"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Thao tác vào Start, chọn Shutdown, chọn tiếp Sleep khi tắt máy tính là gì?",
+                options: [
+                    "A. Chuyển máy tính về chế độ ngủ",
+                    "B. Tắt hẳn máy tính",
+                    "C. Chế độ chuyển đổi màn hình làm việc",
+                    "D. Khởi động lại máy"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Khi truy nhập mạng Internet, điều gì nên làm để bảo vệ mật khẩu được an toàn?",
+                options: [
+                    "A. Đặt mật khẩu có ít hơn 6 kí tự",
+                    "B. Không bao giờ cho người khác biết mật khẩu của bạn",
+                    "C. Đặt mật khẩu giống lý lịch người sử dụng (ví dụ: ngày, tháng, năm sinh; quê quán)",
+                    "D. Chỉ thay đổi mật khẩu sau một thời gian dài"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Firewall (tường lửa) được xây dựng với mục đích gì?",
+                options: [
+                    "A. Ngăn chặn việc download chương trình về máy tính",
+                    "B. Bảo vệ máy tính chống lại sự xâm nhập từ bên ngoài",
+                    "C. Ngăn chặn việc upload chương trình từ server",
+                    "D. Ngăn chặn người dùng sử dụng máy tính"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Bản quyền phần mềm là:",
+                options: [
+                    "A. Việc nhân bản, sao chép từ một phần mềm khác",
+                    "B. Sao chép tác phẩm của người khác",
+                    "C. Quyền của tác giả đối với chương trình máy tính, sưu tập dữ liệu",
+                    "D. Những phần mềm giải trí"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Các hành vi nào sau đây bị nghiêm cấm trong cung cấp, trao đổi, truyền đưa, lưu trữ, sử dụng thông tin số?",
+                options: [
+                    "A. Chống Nhà nước Cộng hòa xã hội chủ nghĩa Việt Nam, phá hoại khối đoàn kết toàn dân; Kích động bạo lực, tuyên truyền chiến tranh xâm lược, gây hận thù giữa các dân tộc và nhân dân các nước, kích động dâm ô, đồi trụy, tội ác, tệ nạn xã hội, mê tín dị đoan, phá hoại thuần phong mỹ tục của dân tộc",
+                    "B. Tiết lộ bí mật nhà nước, bí mật quân sự, an ninh, kinh tế, đối ngoại và những bí mật khác đã được pháp luật quy định",
+                    "C. Xuyên tạc, vu khống, xúc phạm uy tín của tổ chức, danh dự, nhân phẩm, uy tín của công dân; Quảng cáo, tuyên truyền hàng hóa, dịch vụ thuộc danh mục cấm đã được pháp luật quy định",
+                    "D. Tất cả các hành vi trên"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong Windows 10, để xóa một biểu tượng trên Desktop, thực hiện thao tác nào sau đây?",
+                options: [
+                    "A. Nhấn phải chuột vào biểu tượng, chọn Copy",
+                    "B. Nhấn phải chuột vào biểu tượng, chọn Delete",
+                    "C. Nhấn phải chuột vào biểu tượng, chọn Rename",
+                    "D. Nhấn phải chuột vào biểu tượng, chọn Properties"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Trong Windows 10, chương trình nào dùng để quản lý tập tin và thư mục?",
+                options: [
+                    "A. Internet Explorer",
+                    "B. Windows Explorer",
+                    "C. Control Panel",
+                    "D. Calculator"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Trong Windows 10, để đóng một cửa sổ của chương trình đang mở, nhấn tổ hợp phím nào sau đây?",
+                options: [
+                    "A. Ctrl + F5",
+                    "B. Ctrl + F4",
+                    "C. Shift + F4",
+                    "D. Alt + F5"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Trong Windows 7, để thay đổi độ phân giải màn hình, thực hiện các bước nào sau đây?",
+                options: [
+                    "A. Nhấn chuột phải vào Desktop, chọn Gadgets, chọn độ phân giải phù hợp ở mục Resolution và nhấn OK, chọn Appearance",
+                    "B. Nhấn chuột phải vào Desktop, chọn Screen resolution, chọn độ phân giải phù hợp ở mục Resolution và nhấn OK",
+                    "C. Nhấn chuột phải vào Desktop, chọn Personalize, chọn độ phân giải phù hợp ở mục Resolution và nhấn OK, chọn Screen saver",
+                    "D. Nhấn chuột phải vào Desktop, chọn New, chọn độ phân giải phù hợp ở mục Resolution và nhấn OK, chọn Themes"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Trong Windows 10, để kiểm tra thông tin về cấu hình phần cứng, phiên bản và bản quyền của hệ điều hành, thực hiện:",
+                options: [
+                    "A. Nhấn chuột phải vào My Computer, chọn Create Shortcut",
+                    "B. Nhấn chuột phải vào My Computer, chọn Properties",
+                    "C. Nhấn chuột phải vào Computer, chọn Rename",
+                    "D. Nhấn chuột phải vào Computer, chọn Delete"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Để khởi động lại máy tính, thao tác nào dưới đây là sai?",
+                options: [
+                    "A. Nhấn tổ hợp phím Ctrl+Alt+Del",
+                    "B. Vào Start, chọn Shutdown, chọn tiếp Restart",
+                    "C. Nhấn nút Reset trên hộp máy",
+                    "D. Nhấn nút Power trên hộp máy"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong My Computer, nhấn chuột phải vào ổ đĩa D: và chọn thực đơn Format có ý nghĩa gì?",
+                options: [
+                    "A. Xem các thông tin chi tiết về ổ đĩa D:",
+                    "B. Thực hiện chức năng sao chép dữ liệu trong ổ đĩa D:",
+                    "C. Thực hiện chức năng định dạng lại ổ đĩa D:",
+                    "D. Thực hiện chức năng phân vùng cho ổ đĩa D:"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Trong Windows 10, sau khi nhấn phải chuột vào thư mục hoặc tập tin, chọn Rename có tác dụng?",
+                options: [
+                    "A. Sao chép một thư mục hoặc tập tin thành một thư mục hoặc tập tin mới",
+                    "B. Đổi tên thư mục hoặc tên tập tin",
+                    "C. Nối nhiều tập tin được chọn thành một tập tin",
+                    "D. Thay đổi thuộc tính thư mục hoặc tập tin"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Để tạo một thư mục trên desktop, nhấn phải chuột lên desktop và thực hiện:",
+                options: [
+                    "A. Vào New, chọn Folder",
+                    "B. Vào New, chọn Shortcut",
+                    "C. Vào New, chọn Contact",
+                    "D. Vào New, chọn Text Document"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Trong Windows Explorer, để di chuyển một tập tin được chọn, vào Edit, chọn Cut và thực hiện:",
+                options: [
+                    "A. Chọn vị trí muốn chuyển đến và vào Edit, chọn Redo",
+                    "B. Chọn vị trí muốn chuyển đến và vào Edit, chọn Undo",
+                    "C. Chọn vị trí muốn chuyển đến và vào Edit, chọn Copy",
+                    "D. Chọn vị trí muốn chuyển đến và vào Edit, chọn Paste"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong Windows 7, biểu tượng Recycle Bin là:",
+                options: [
+                    "A. Một chương trình tiện ích để quản lý tập tin và thư mục",
+                    "B. Nơi lưu trữ tạm thời tập tin hoặc thư mục đã bị xóa, có thể phục hồi lại",
+                    "C. Một chương trình dùng để sắp xếp, chỉnh sửa đĩa",
+                    "D. Một chương trình soạn thảo đơn giản, không cần thiết phải định dạng"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Để giải nén tập tin bằng WinRAR trên máy tính, thao tác nào sau đây không thực hiện được?",
+                options: [
+                    "A. Chọn File cần giải nén, nhấn phải chuột và chọn Extract Files…",
+                    "B. Chọn File cần giải nén, nhấn phải chuột và chọn Extract Here",
+                    "C. Chọn File cần giải nén, nhấn phải chuột và chọn Open with",
+                    "D. Chọn File cần giải nén, nhấn phải chuột và chọn Extract to <tên File>"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Virus máy tính có khả năng?",
+                options: [
+                    "A. Lây lan qua bàn phím",
+                    "B. Lây lan qua màn hình",
+                    "C. Tự sao chép để lây nhiễm",
+                    "D. Tự mất đi khi khởi động máy tính"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Trong Windows 7, để xóa tập tin được chọn, nhấn phím nào sau đây?",
+                options: [
+                    "A. Backspace",
+                    "B. Delete",
+                    "C. Space",
+                    "D. Insert"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Khi nhận được một bức thư điện tử chứa tập tin đính kèm mà không nhận biết được mức độ an toàn của bức thư, xử lý thế nào trong tình huống này?",
+                options: [
+                    "A. Mở tập tin này ra để kiểm tra loại tập tin",
+                    "B. Chuyển thư này cho ai đó mà bạn nghĩ rằng bạn có thể nhận biết được",
+                    "C. Quét tập tin này bằng chương trình chống virus",
+                    "D. Lưu bản sao tập tin này vào đĩa cứng và mở bản sao này"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Đáp án nào sau đây đúng khi muốn chuyển đổi tập tin văn bản sang kiểu .PDF và ngược lại?",
+                options: [
+                    "A. Không chuyển đổi được",
+                    "B. Chỉ chuyển đổi được sang kiểu .PNJ",
+                    "C. Chỉ chuyển đổi được sang kiểu .MP3",
+                    "D. Dùng phần mềm trung gian để chuyển đổi"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Phương tiện truyền thông phổ biến nhất hiện nay là?",
+                options: [
+                    "A. Loa phát thanh",
+                    "B. Internet",
+                    "C. Pano, áp phích",
+                    "D. Đài truyền thanh"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Để truyền đi một ảnh động, ta chiếu lần lượt nhiều ảnh tĩnh với tần số ảnh tương đối lớn. Tần số ảnh phải được lựa chọn để đáp ứng yêu cầu nào dưới đây?",
+                options: [
+                    "A. Tạo cảm giác chuyển động liên tục của ảnh động, đồng thời triệt tiêu cảm nhận về sự nhấp nháy của chuỗi ảnh",
+                    "B. Tạo cảm giác về quá trình chuyển động liên tục của ảnh",
+                    "C. Ảnh động tái tạo trên màn hình không bị chớp",
+                    "D. Không tạo được ảnh động"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Bảng mã Unicode được hỗ trợ những kiểu font chữ nào?",
+                options: [
+                    "A. .VnTime, .VnTimeH, .VnArial,…",
+                    "B. VNI-Time, VNI-Top, VNI-Book,…",
+                    "C. Times New Roman, Tahoma, Arial,…",
+                    "D. VNtimes New Roman, VNumbrella, SVNTimes New Roman, SVNumbrella"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Khi đang sử dụng phần mềm Unikey và thiết lập bảng mã là Unicode dựng sẵn với kiểu gõ Telex để nhập văn bản bằng tiếng Việt. Muốn bỏ dấu thanh ta sử dụng phím nào?",
+                options: [
+                    "A. S",
+                    "B. F",
+                    "C. Z",
+                    "D. Q"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Nhấn tổ hợp phím nào sau đây để in một tài liệu?",
+                options: [
+                    "A. Ctrl + P",
+                    "B. Ctrl + A",
+                    "C. Ctrl + B",
+                    "D. Ctrl + C"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Trong Microsoft Word 2013, thực hiện thao tác nào sau đây để chèn các kí tự đặc biệt vào văn bản?",
+                options: [
+                    "A. Vào View, chọn Symbol",
+                    "B. Vào Home, chọn Symbol",
+                    "C. Vào Insert, chọn Symbol",
+                    "D. Vào Review, chọn Symbol"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Khi chọn bộ gõ theo bảng mã Unicode, kiểu gõ Telex thì phông chữ sử dụng để gõ đúng tiếng Việt trong chương trình soạn thảo văn bản Microsoft Word là:",
+                options: [
+                    "A. VNI",
+                    "B. Vntime",
+                    "C. Times New Roman",
+                    "D. VNI-WIN"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Trong Microsoft Word 2013, nhấn tổ hợp phím Ctrl + O có tác dụng gì?",
+                options: [
+                    "A. Mở một file văn bản mới",
+                    "B. Mở một file văn bản đã có",
+                    "C. Đóng một file văn bản đang mở",
+                    "D. Lưu một file văn bản vào đĩa"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Trong Microsoft Word 2013, thực hiện thao tác nào sau đây để tạo một tập tin văn bản mới?",
+                options: [
+                    "A. Vào Insert, chọn New",
+                    "B. Vào Home, chọn New",
+                    "C. Vào Page Layout, chọn New",
+                    "D. Vào File, chọn New"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong Microsoft Word 2013, nhấn tổ hợp phím tắt nào cho phép chọn toàn bộ văn bản đang soạn thảo?",
+                options: [
+                    "A. Alt + F",
+                    "B. Ctrl + A",
+                    "C. Alt + A",
+                    "D. Ctrl + F"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Trong Microsoft Word 2013, nhấn tổ hợp phím Ctrl + H có tác dụng gì?",
+                options: [
+                    "A. Tạo tệp văn bản mới",
+                    "B. Mở cửa sổ tìm kiếm và thay thế",
+                    "C. Định dạng chữ hoa",
+                    "D. Lưu tệp văn bản vào đĩa"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Trong Microsoft Word 2013, để tạo chữ nghệ thuật, ta thực hiện lệnh:",
+                options: [
+                    "A. Vào Home, chọn WordArt",
+                    "B. Vào View, chọn WordArt",
+                    "C. Vào Review, chọn WordArt",
+                    "D. Vào Insert, chọn WordArt"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong Microsoft Word 2013, nhấn tổ hợp phím Ctrl + U có tác dụng gì?",
+                options: [
+                    "A. Đoạn văn bản đó được định dạng theo chữ in đậm",
+                    "B. Đoạn văn bản đó được định dạng theo chữ có gạch chân",
+                    "C. Đoạn văn bản đó được định dạng theo chữ nghiêng",
+                    "D. Đoạn văn bản đó được định dạng canh giữa"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Trong Microsoft Word 2013, thực hiện thao tác nào sau đây để căn lề cho một đoạn văn bản?",
+                options: [
+                    "A. Vào Home, chọn Font",
+                    "B. Vào Home, chọn Styles",
+                    "C. Vào Home, chọn Paragraph",
+                    "D. Vào Home, chọn Editing"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Trong Microsoft Word 2013, thực hiện thao tác nào sau đây để tạo khoảng cách giữa 2 dòng đã được chọn là 1,5 dòng?",
+                options: [
+                    "A. Nhấp biểu tượng Numbering trên thanh công cụ",
+                    "B. Nhấn chuột phải lên đoạn đang chọn, chọn 1,5 lines",
+                    "C. Nhấp biểu tượng Decrease Indent trên thanh công cụ",
+                    "D. Vào Home, nhấn biểu tượng Line and Paragraph Spacing, chọn 1,5 lines"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong Microsoft Word 2013, vào Home, chọn biểu tượng Numbering/ Define New Number Format, phần Number Format dùng để:",
+                options: [
+                    "A. Thay đổi định dạng của Number",
+                    "B. Thay đổi khoảng cách giữa các dòng trong đoạn",
+                    "C. Hiệu chỉnh ký hiệu của Bullets",
+                    "D. Thay đổi khoảng cách giữa các đoạn được chọn"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Trong Microsoft Word 2013, thực hiện thao tác nào sau đây để đánh dấu tự động cho các đoạn văn bản?",
+                options: [
+                    "A. Vào Home, nhấn vào biểu tượng Numbering",
+                    "B. Vào Home, nhấn vào biểu tượng Decrease Indent",
+                    "C. Vào Home, nhấn vào biểu tượng Increase Indent",
+                    "D. Vào Home, nhấn vào biểu tượng Bullets"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong Microsoft Word 2013, thực hiện thao tác nào sau đây để tạo một bảng biểu?",
+                options: [
+                    "A. Vào Home, chọn Table",
+                    "B. Vào Review, chọn Table",
+                    "C. Vào View, chọn Table",
+                    "D. Vào Insert, chọn Table"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong Microsoft Word 2013, thực hiện thao tác nào sau đây để chọn một ô trong bảng sau khi để trỏ chuột tại ô cần chọn?",
+                options: [
+                    "A. Vào Layout, chọn Select, chọn tiếp Select Row",
+                    "B. Vào Layout, chọn Select, chọn tiếp Select Column",
+                    "C. Vào Layout, chọn Select, chọn tiếp Select Table",
+                    "D. Vào Layout, chọn Select, chọn tiếp Select Cell"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong Microsoft Word 2013, thực hiện thao tác nào sau đây để chèn biểu đồ sau khi di chuyển con trỏ đến vị trí cần chèn?",
+                options: [
+                    "A. Vào Insert, chọn Shapes",
+                    "B. Vào Insert, chọn Clip Art",
+                    "C. Vào Insert, chọn Chart",
+                    "D. Vào Insert, chọn Picture"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Trong Microsoft Word 2013, thực hiện thao tác nào sau đây để thay đổi kích thước hình ảnh?",
+                options: [
+                    "A. Kích chuột phải vào hình ảnh, chọn Size",
+                    "B. Kích chuột phải vào hình ảnh, chọn Text Wrapping",
+                    "C. Kích chuột phải vào hình ảnh, chọn Insert Caption",
+                    "D. Kích chuột phải vào hình ảnh, chọn Format Picture"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Trong Microsoft Word 2013, thực hiện thao tác nào sau đây để chèn Text box vào văn bản?",
+                options: [
+                    "A. Vào Home, chọn Text box",
+                    "B. Vào View, chọn Text box",
+                    "C. Vào Insert, chọn Text box",
+                    "D. Vào Page Layout, chọn Text box"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Trong Microsoft Word 2013, nhấn tổ hợp phím nào để căn đều hai bên cho văn bản?",
+                options: [
+                    "A. Ctrl + L",
+                    "B. Ctrl + R",
+                    "C. Ctrl + J",
+                    "D. Ctrl + E"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Trong Microsoft Word 2013, thực hiện thao tác nào sau đây để bảo vệ tập tin văn bản đã làm xong?",
+                options: [
+                    "A. Vào Insert, chọn Protect Document",
+                    "B. Vào References, chọn Protect Document",
+                    "C. Vào View, chọn Protect Document",
+                    "D. Vào File, chọn Info, chọn Protect Document, chọn tiếp Encrypt with Password"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong Microsoft Word 2013, thực hiện thao tác nào sau đây để chọn khổ giấy in cho văn bản?",
+                options: [
+                    "A. Vào Page Layout, chọn Page Setup, chọn tiếp Paper",
+                    "B. Vào Page Layout, chọn Page Setup, chọn tiếp Margins",
+                    "C. Vào Page Layout, chọn Page Setup, chọn tiếp Layout",
+                    "D. Vào Page Layout, chọn Paragraph, chọn tiếp Paper"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Trong Microsoft Word 2013, để chọn được nhiều hình ảnh phải nhấn và giữ thêm phím nào?",
+                options: [
+                    "A. Enter",
+                    "B. Shift",
+                    "C. Alt",
+                    "D. Tab"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Trong Microsoft Excel 2013, giao giữa một hàng và một cột được gọi là gì?",
+                options: [
+                    "A. Ô",
+                    "B. Dữ liệu",
+                    "C. Trường",
+                    "D. Công thức"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Trong Microsoft Excel 2013, nhấn tổ hợp phím nào sau đây để chọn toàn bộ nội dung bảng tính?",
+                options: [
+                    "A. Ctrl + Alt + A",
+                    "B. Ctrl + A",
+                    "C. Shift + A",
+                    "D. Shift + Ctrl + A"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Trong Microsoft Excel 2013, thực hiện chức năng nào sau đây để phóng to hoặc thu nhỏ màn hình?",
+                options: [
+                    "A. Vào Insert, chọn Zoom, chọn tiếp tỷ lệ, nhấn OK",
+                    "B. Vào Data, chọn Zoom, chọn tiếp tỷ lệ, nhấn OK",
+                    "C. Vào Review, chọn Zoom, chọn tiếp tỷ lệ, nhấn OK",
+                    "D. Vào View, chọn Zoom, chọn tiếp tỷ lệ, nhấn OK"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong Microsoft Excel 2013, nhấn tổ hợp phím nào sau đây để tìm kiếm ô theo nội dung?",
+                options: [
+                    "A. Ctrl + G",
+                    "B. Ctrl + F",
+                    "C. Shift + G",
+                    "D. Shift + F"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Trong Microsoft Excel 2013, tại ô A1 có công thức =B1 + C1, khi sao chép công thức sang ô A5, kết quả tại ô A5 là?",
+                options: [
+                    "A. =B5 + C5",
+                    "B. =C2 + D2",
+                    "C. =C1 + C2",
+                    "D. =B1 + D1"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Trong Microsoft Excel 2013, thực hiện thao tác nào sau đây để chèn thêm một hàng vào bảng tính?",
+                options: [
+                    "A. Vào Home, chọn Insert, chọn tiếp Insert Sheet Columns",
+                    "B. Vào Home, chọn Insert, chọn tiếp Insert Cells",
+                    "C. Vào Home, chọn Insert, chọn tiếp Insert Sheet Rows",
+                    "D. Vào Home, chọn Insert, chọn tiếp Insert Sheet"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Trong Microsoft Excel 2013, thực hiện thao tác nào sau đây để ẩn một cột?",
+                options: [
+                    "A. Nhấn chuột phải chọn cột cần ẩn, chọn Cut",
+                    "B. Nhấn chuột phải chọn cột cần ẩn, chọn Unhide",
+                    "C. Nhấn chuột phải chọn cột cần ẩn, chọn Delete",
+                    "D. Nhấn chuột phải chọn cột cần ẩn, chọn Hide"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong Microsoft Excel 2013, giả sử giá trị ĐƠN GIÁ nằm tại ô A3 của Sheet1, giá trị của cột SỐ LƯỢNG nằm tại ô F3 của Sheet2. Để tính giá trị THÀNH TIỀN theo công thức = SỐ LƯỢNG * ĐƠN GIÁ vào ô H3 của Sheet2 thì sử dụng công thức nào?",
+                options: [
+                    "A. Sheet1!A3*Sheet1!F3",
+                    "B. A3*F3",
+                    "C. A3*Sheet2!F3",
+                    "D. Sheet1!A3*F3"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong Microsoft Excel 2013, giả sử tại ô A1 có giá trị là 2, ô B1 có giá trị là 4. Tại ô C2 có công thức =A1^B1*B1, kết quả tại ô C2 là?",
+                options: [
+                    "A. =32",
+                    "B. =64",
+                    "C. =128",
+                    "D. =256"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Trong Microsoft Excel 2013, khi nhập sai tên hàm trong công thức, sẽ xuất hiện lỗi nào sau?",
+                options: [
+                    "A. #N/A!",
+                    "B. #NAME!",
+                    "C. #VALUE!",
+                    "D. #DIV/0!"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Trong Microsoft Excel 2013, để tính trung bình cộng giá trị các hàng (cột), sử dụng hàm nào sau đây?",
+                options: [
+                    "A. SUM(number 1; number 2; …)",
+                    "B. MAX(number 1; number 2; …)",
+                    "C. AVERAGE(number1; number2; ...)",
+                    "D. MIN(number 1; number 2; …)"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Trong Microsoft Excel 2013, tại ô A2 nhập công thức =MAX(3;14;10;5) cho kết quả là:",
+                options: [
+                    "A. 3",
+                    "B. 14",
+                    "C. 5",
+                    "D. 10"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Trong Microsoft Excel 2013, giả sử ô A1, A2, A3, có chứa lần lượt các số: 234, 235, 236, tại ô A4 điền công thức =MAX(A1:A3) sẽ cho kết quả như thế nào?",
+                options: [
+                    "A. 234",
+                    "B. 236",
+                    "C. 235",
+                    "D. #NAME?"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Trong Microsoft Excel 2013, công thức nào sau đây đúng?",
+                options: [
+                    "A. =IF(5><8;'Khac';'Bang')",
+                    "B. =IF(5!8;'Khac';'Bang')",
+                    "C. =IF(5#8;'Khac';'Bang')",
+                    "D. =IF(5<>8;'Khac';'Bang')"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong Microsoft Excel 2013, hàm nào cho kết quả là ngày tháng năm và giờ hiện thời của máy tính?",
+                options: [
+                    "A. Hàm DATE(year;month;day)",
+                    "B. Hàm TODAY()",
+                    "C. Hàm NOW()",
+                    "D. Hàm DATEVALUE(date_text)"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Trong Microsoft Excel 2013, thực hiện thao tác nào cho phép hiển thị các chức năng thay đổi font chữ, cỡ chữ, kiểu chữ...?",
+                options: [
+                    "A. Vào Home, chọn Format Cells: Number",
+                    "B. Vào Home, chọn Format Cells: Alignment",
+                    "C. Vào Home, chọn Format Cells: Border",
+                    "D. Vào Home, chọn Format Cells: Font"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong Microsoft Excel, thực hiện thao tác nào sau đây để chèn một biểu đồ?",
+                options: [
+                    "A. Vào View, chọn Charts",
+                    "B. Vào Home, chọn Create Charts",
+                    "C. Vào Insert, chọn Charts",
+                    "D. Vào Data, chọn Charts"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Trong Microsoft Excel 2013, thực hiện thao tác nào sau đây để chèn thêm nội dung phần đầu trang tính?",
+                options: [
+                    "A. Vào Page Layout, chọn Page Setup, chọn tiếp Margins",
+                    "B. Vào Page Layout, chọn Page Setup, chọn tiếp Page",
+                    "C. Vào Page Layout, chọn Page Setup, chọn tiếp Header & Footer",
+                    "D. Vào Page Layout, chọn Page Setup, chọn tiếp Sheet"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Trong Microsoft Excel 2013, thực hiện thao tác nào sau đây để chèn thêm số trang ở phần cuối trang tính?",
+                options: [
+                    "A. Vào View, chọn Header & Footer, nhấn Header",
+                    "B. Vào Insert, chọn Header & Footer, nhấn Header",
+                    "C. Vào Insert, chọn Header & Footer, nhấn Footer",
+                    "D. Vào View, chọn Header & Footer, nhấn Footer"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Trong Microsoft Excel 2013, thực hiện thao tác nào sau đây để chọn số bản in của trang tính?",
+                options: [
+                    "A. Vào File, chọn Print, điền giá trị vào ô Copies",
+                    "B. Vào Home, chọn Print, điền giá trị vào ô Copies",
+                    "C. Vào Insert, chọn Print, điền giá trị vào ô Copies",
+                    "D. Vào View, chọn Print, điền giá trị vào ô Copies"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Trong Excel 2013, để sắp xếp cơ sở dữ liệu, ta thực hiện:",
+                options: [
+                    "A. Vào Formular, chọn Sort",
+                    "B. Vào View, chọn Sort",
+                    "C. Vào Data, chọn Sort",
+                    "D. Vào Home, chọn Sort"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Trong Microsoft PowerPoint 2013, để di chuyển một hoặc nhiều Slide trong một bài thuyết trình vào Clipboard, thực hiện:",
+                options: [
+                    "A. Chọn Slide nhấn phải chuột, chọn Cut",
+                    "B. Chọn Slide nhấn phải chuột, chọn Copy",
+                    "C. Chọn Slide nhấn phải chuột, chọn Paste",
+                    "D. Chọn Slide nhấn phải chuột, chọn Delete Slide"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Trong Microsoft PowerPoint 2013, nhấn tổ hợp phím nào sau đây để hủy bỏ một thao tác vừa thực hiện?",
+                options: [
+                    "A. Ctrl + X",
+                    "B. Ctrl + Z",
+                    "C. Ctrl + V",
+                    "D. Ctrl + C"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Trong Microsoft PowerPoint 2013, cần thực hiện thao tác nào sau đây để xây dựng một bài trình chiếu chuyên nghiệp?",
+                options: [
+                    "A. Nội dung bám sát những gì muốn trình bày",
+                    "B. Dùng các cụm từ ngắn gọn, không quá dài",
+                    "C. Sử dụng hình ảnh để minh họa",
+                    "D. Tất cả các nội dung trên"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong Microsoft PowerPoint 2013, phím nào sau đây dùng để xóa ký tự đứng sát sau con trỏ?",
+                options: [
+                    "A. Delete",
+                    "B. Page Up",
+                    "C. Page Down",
+                    "D. Backspace"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Trong Microsoft PowerPoint 2013, thực hiện thao tác nào sau đây để lưu tập tin (lần đầu) có tên Giaoan1.ppt?",
+                options: [
+                    "A. Vào Insert, chọn Save, nhập Giaoan1.ppt và nhấn Save",
+                    "B. Vào Home, chọn Save, nhập Giaoan1.ppt và nhấn Save",
+                    "C. Vào View, chọn Save, nhập Giaoan1.ppt và nhấn Save",
+                    "D. Vào File, chọn Save, nhập Giaoan1.ppt và nhấn Save"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong Microsoft PowerPoint 2013, mỗi trang trình diễn được gọi là:",
+                options: [
+                    "A. Một Slide",
+                    "B. Một Document",
+                    "C. Một Workbook",
+                    "D. Một File"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Trong Microsoft PowerPoint 2013, thực hiện thao tác nào sau đây để thêm một Slide?",
+                options: [
+                    "A. Vào File, chọn New Slide",
+                    "B. Vào Insert, chọn New Slide",
+                    "C. Vào Design, chọn New Slide",
+                    "D. Vào Home, chọn New Slide"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Yếu tố nào sau đây không ảnh hưởng đến chất lượng bài thuyết trình?",
+                options: [
+                    "A. Nội dung",
+                    "B. Cấu trúc, tổng thể",
+                    "C. Con người",
+                    "D. Thời tiết"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong Microsoft PowerPoint 2013, nhấn tổ hợp phím nào sau đây để căn lề giữa văn bản trong Textbox?",
+                options: [
+                    "A. Ctrl + U",
+                    "B. Ctrl + L",
+                    "C. Ctrl + E",
+                    "D. Ctrl + R"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Trong Microsoft PowerPoint, để chèn các ký hiệu vào đầu mỗi đoạn văn bản, thực hiện:",
+                options: [
+                    "A. Vào Home, nhấn vào biểu tượng Numbering",
+                    "B. Vào Home, nhấn vào biểu tượng Decrease List Level",
+                    "C. Vào Home, nhấn vào biểu tượng Bullets",
+                    "D. Vào Home, nhấn vào biểu tượng Increase List Level"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Trong Microsoft PowerPoint 2013, đưa con trỏ vào bảng biểu và nhấn tổ hợp phím nào sau đây để chọn toàn bộ bảng?",
+                options: [
+                    "A. Ctrl + E",
+                    "B. Ctrl + A",
+                    "C. Ctrl + U",
+                    "D. Ctrl + R"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Trong Microsoft PowerPoint 2013, để chèn biểu đồ vào slide, thực hiện:",
+                options: [
+                    "A. Vào Home, chọn Chart và nhập dữ liệu vào bảng",
+                    "B. Vào View, chọn Chart và nhập dữ liệu vào bảng",
+                    "C. Vào Insert, chọn Chart và nhập dữ liệu vào bảng",
+                    "D. Vào Design, chọn Chart và nhập dữ liệu vào bảng"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Trong Microsoft PowerPoint 2013, để chèn sơ đồ tổ chức vào Slide, thực hiện thao tác nào sau đây?",
+                options: [
+                    "A. Vào Insert, chọn Clip Art",
+                    "B. Vào Insert, chọn Picture",
+                    "C. Vào Insert, chọn SmartArt",
+                    "D. Vào Insert, chọn Chart"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Trong Microsoft PowerPoint 2013, để sao chép một hình ảnh trong slide, thực hiện:",
+                options: [
+                    "A. Chọn hình ảnh cần sao chép, nhấn Ctrl + C, đưa con trỏ đến vị trí cần dán, nhấn Ctrl + V",
+                    "B. Chọn hình ảnh cần sao chép, nhấn Ctrl + V, đưa con trỏ đến vị trí cần dán, nhấn Ctrl + C",
+                    "C. Chọn hình ảnh cần sao chép, nhấn Ctrl + X, đưa con trỏ đến vị trí cần dán, nhấn Ctrl + V",
+                    "D. Chọn hình ảnh cần sao chép, nhấn Ctrl + V, đưa con trỏ đến vị trí cần dán, nhấn Ctrl + X"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Trong Microsoft PowerPoint 2013, thao tác nào sau đây cho phép chọn nhiều đối tượng?",
+                options: [
+                    "A. Giữ phím Alt trong khi nhấn chọn từng đối tượng",
+                    "B. Giữ phím Tab trong khi nhấn chọn từng đối tượng",
+                    "C. Giữ phím Caps Lock trong khi nhấn chọn từng đối tượng",
+                    "D. Giữ phím Shift trong khi nhấn chọn từng đối tượng"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong Microsoft PowerPoint 2013, khi chọn đối tượng AutoShapes thường có hình tròn màu xanh đi kèm. Hình tròn đó là:",
+                options: [
+                    "A. Nút điều khiển, dùng để quay, lật đối tượng AutoShapes",
+                    "B. Nút kích cỡ, dùng để thay đổi kích thước của đối tượng AutoShapes",
+                    "C. Nút di chuyển, dùng để kéo đối tượng AutoShape tới một vị trí khác",
+                    "D. Nút màu, dùng để thay đổi màu nền của đối tượng AutoShapes"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Trong Microsoft PowerPoint 2013, để nhập nội dung vào đối tượng đã vẽ, nhấn chuột phải vào đối tượng và chọn:",
+                options: [
+                    "A. Group",
+                    "B. Edit Text",
+                    "C. Bring to Font",
+                    "D. Send to Back"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Trong Microsoft PowerPoint 2013, muốn tạo một hiệu ứng cho các đối tượng trong 1 slide, ta dùng lệnh nào sau đây:",
+                options: [
+                    "A. Vào Insert, chọn Add Animation",
+                    "B. Vào Animations, chọn Add Animation",
+                    "C. Vào Slide, chọn Add Animation",
+                    "D. Vào Home, chọn Add Animation"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Trong Microsoft PowerPoint 2013, để chèn chú thích vào slide, thực hiện:",
+                options: [
+                    "A. Vào Home, chọn Notes Pane",
+                    "B. Vào Insert, chọn Notes Pane",
+                    "C. Vào View, chọn Notes Pane",
+                    "D. Vào Design, chọn Notes Pane"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Trong Microsoft PowerPoint 2013, thực hiện thao tác nào sau đây để ẩn slide?",
+                options: [
+                    "A. Nhấn chuột phải slide, chọn New Slide",
+                    "B. Nhấn chuột phải slide, chọn Reset Slide",
+                    "C. Nhấn chuột phải slide, chọn Delete Slide",
+                    "D. Nhấn chuột phải slide, chọn Hide Slide"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Trong Microsoft PowerPoint 2010, để đặt hướng in của slide nằm dọc, thực hiện:",
+                options: [
+                    "A. Vào Design, chọn Page Setup, trong tab Orientation, chọn Portrait và nhấn Ok",
+                    "B. Vào Design, chọn Page Setup, trong tab Orientation, chọn Landscape và nhấn Ok",
+                    "C. Vào Home, chọn Page Setup, trong tab Orientation, chọn Portrait và nhấn Ok",
+                    "D. Vào Home, chọn Page Setup, trong tab Orientation, chọn Landscape và nhấn Ok"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Có thể mở đúng định dạng các file .html bằng:",
+                options: [
+                    "A. Trình duyệt Web Internet Explorer",
+                    "B. Microsoft Excel",
+                    "C. Trình duyệt mail Outlook Express",
+                    "D. Microsoft Outlook"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Người sử dụng thường vào địa chỉ nào để tìm kiếm thông tin?",
+                options: [
+                    "A. http://ngoisao.net/",
+                    "B. https://www.google.com.vn/",
+                    "C. http://vnexpress.net/",
+                    "D. http://www.baomoi.com/"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Tường lửa là:",
+                options: [
+                    "A. Cách thức để 'che dấu' thông tin",
+                    "B. Một hệ thống bao gồm cả phần cứng và phần mềm có mục đích chống lại sự xâm nhập trái phép từ Internet",
+                    "C. Các thông tin lưu trong máy của bạn do các Website bạn đã từng truy nhập ghi vào",
+                    "D. Các tập tin bị mã hóa"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Internet là:",
+                options: [
+                    "A. Hệ thống thông tin toàn cầu",
+                    "B. Mạng cục bộ",
+                    "C. Ngôn ngữ lập trình",
+                    "D. Phần mềm soạn thảo"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Lợi thế của mua hàng trực tuyến so với mua hàng tại cửa hàng là:",
+                options: [
+                    "A. Có thể mua hàng trong suốt 24h trong ngày",
+                    "B. Việc thanh toán đảm bảo an ninh hơn",
+                    "C. Việc xác định tình trạng của hàng hóa dễ dàng hơn",
+                    "D. Hàng hóa đã mua dễ trả lại hơn"
+                ],
+                correct: "A"
+            },
+            {
+                question: "'www' trên địa chỉ Website là có nghĩa là:",
+                options: [
+                    "A. Word Wed Wide",
+                    "B. World Wide Web",
+                    "C. Word Wide Web",
+                    "D. World Web Web"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Địa chỉ Website nào sau đây là không hợp lệ?",
+                options: [
+                    "A. www.thuathienhue.com",
+                    "B. www.thuathienhueportal/gov/vn",
+                    "C. www.thuathienhue.gov.vn",
+                    "D. www.thuathienhue.gov.vn"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Phần History trong trình duyệt Internet Explorer dùng để:",
+                options: [
+                    "A. Liệt kê các Website đã duyệt",
+                    "B. Liệt kê các địa chỉ mail đã duyệt",
+                    "C. Chỉ liệt kê các video đã duyệt",
+                    "D. Liệt kê số người đã sử dụng mạng Internet"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Form trong Website không được dùng cho mục đích nào?",
+                options: [
+                    "A. Thu thập: tên, địa chỉ, số điện thoại, địa chỉ email và các thông tin khác",
+                    "B. Trao đổi trực tiếp",
+                    "C. Thu thập thông tin dùng để đăng ký mua một mặt hàng nào đó",
+                    "D. Thu thập thông tin phản hồi về một website và cung cấp công cụ tìm kiếm (search box) cho website"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Thư điện tử dùng để:",
+                options: [
+                    "A. Hội thoại trực tuyến",
+                    "B. Trao đổi thông tin trực tuyến",
+                    "C. Gửi thư thông qua môi trường Internet",
+                    "D. Tìm kiếm thông tin"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Địa chỉ Email nào sau đây không hợp lệ?",
+                options: [
+                    "A. congchuc@mail123.com",
+                    "B. congchuc123@gmail.com",
+                    "C. cong    chuc@gmail.com",
+                    "D. cong.chuc@gmail.com"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Thực hiện biện pháp nào sau đây để hạn chế việc lây lan virus?",
+                options: [
+                    "A. Không tải và sử dụng những tập tin từ Email không rõ nguồn gốc",
+                    "B. Trong quá trình lướt Web, sử dụng internet không nên click vào những link liên kết lạ, những hình ảnh có liên kết ẩn",
+                    "C. Nên kích hoạt và sử dụng tường lửa Firewall trong Windows",
+                    "D. Đáp án A, B, C đều đúng"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Thực hiện thao tác nào sau đây để tạo mới một quy luật lọc thư?",
+                options: [
+                    "A. Vào Edit, chọn tab Filters và nhấn vào nút 'Create a new Filter'",
+                    "B. Vào Tool, chọn tab Filters và nhấn vào nút 'Create a new Filter'",
+                    "C. Vào File, chọn tab Filters và nhấn vào nút 'Create a new Filter'",
+                    "D. Vào Settings, chọn tab Filters và nhấn vào nút 'Create a new Filter'"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Thao tác để tìm kiếm thư theo chủ đề trong Hộp thư đến của Gmail là:",
+                options: [
+                    "A. Nhập chủ đề tìm kiếm vào thanh địa chỉ",
+                    "B. Nhấn vào Soạn thư và nhập chủ đề tìm kiếm vào ô To",
+                    "C. Nhập chủ đề tìm kiếm vào ô Search",
+                    "D. Nhấn vào Soạn thư và nhập chủ đề tìm kiếm vào ô Subject"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Để lấy lại những Email đã xóa trong thời gian không quá 30 ngày, vào mục nào sau đây trong giao diện Gmail?",
+                options: [
+                    "A. Trash",
+                    "B. Spam",
+                    "C. Inbox",
+                    "D. Important"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Bấm vào đâu trong kết quả tìm kiếm để mở được trang web chứa kết quả tìm kiếm?",
+                options: [
+                    "A. Phần tiêu đề",
+                    "B. Phần mô tả",
+                    "C. Phần địa chỉ website",
+                    "D. Tất cả đều đúng"
+                ],
+                correct: "A"
+            },
+            {
+                question: "'Thương mại điện tử' là:",
+                options: [
+                    "A. Thao tác gửi và nhận thư qua điện tử qua mạng Internet",
+                    "B. Sự mua bán sản phẩm hay dịch vụ trên các hệ thống điện tử như Internet và các mạng máy tính",
+                    "C. Sự mua bán sản phẩm hay dịch vụ trực tiếp tại các siêu thị",
+                    "D. Soạn thảo một trang văn bản điện tử bằng phần mềm Microsoft Word"
+                ],
+                correct: "B"
+            },
+            {
+                question: "Thao tác nào sau đây dùng để thêm địa chỉ Email mới vào danh bạ Gmail từ hộp thư đến?",
+                options: [
+                    "A. Chọn menu xổ xuống từ thư đến, chọn Chuyển tiếp",
+                    "B. Chọn menu xổ xuống từ thư đến, chọn Lọc thư giống thư này",
+                    "C. Chọn menu xổ xuống từ thư đến, chọn Thêm địa chỉ Email vào danh bạ",
+                    "D. Chọn menu xổ xuống từ thư đến, chọn Trả lời"
+                ],
+                correct: "C"
+            },
+            {
+                question: "Thương mại điện tử là tất cả hoạt động trao đổi thông tin, sản phẩm, dịch vụ, thanh toán… thông qua các phương tiện điện tử như máy tính, đường dây điện thoại, internet và các phương tiện khác. Đây là thương mại điện tử nhìn ở góc độ nào sau đây?",
+                options: [
+                    "A. Kinh doanh",
+                    "B. Truyền thông",
+                    "C. Dịch vụ",
+                    "D. Mạng Internet"
+                ],
+                correct: "A"
+            },
+            {
+                question: "Những thông tin nào khách hàng cần quan tâm khi mua hàng trực tuyến?",
+                options: [
+                    "A. Giá cả và thông tin mô tả sản phẩm",
+                    "B. Thông tin thanh toán",
+                    "C. Thông tin về chính sách hoàn tiền",
+                    "D. Tất cả các thông tin trên"
+                ],
+                correct: "D"
+            },
+            {
+                question: "Thực hiện thao tác nào sau đây để đăng nhập các dịch vụ ngân hàng điện tử (VCB-iB@nking)?",
+                options: [
+                    "A. Nhập Tên truy cập",
+                    "B. Nhập Mật khẩu truy cập",
+                    "C. Nhập Mã số xác nhận",
+                    "D. Tất cả các thao tác trên"
+                ],
+                correct: "D"
+            }
+        ];
+
+        // Tạo câu hỏi tự động từ dữ liệu
+        function generateQuiz() {
+            const form = document.getElementById("quizForm");
+            quizData.forEach((item, index) => {
+                const qNum = index + 1;
+                const div = document.createElement("div");
+                div.className = "question";
+                div.innerHTML = `
+                    <p><strong>Câu ${qNum}:</strong> ${item.question}</p>
+                    ${item.options.map(option => `
+                        <label><input type="radio" name="q${qNum}" value="${option.charAt(0)}"> ${option}</label><br>
+                    `).join("")}
+                    <p id="result${qNum}"></p>
+                `;
+                form.appendChild(div);
+            });
+        }
+
+        // Kiểm tra đáp án
+        function checkAnswers() {
+            let score = 0;
+            const totalQuestions = 126;
+
+            for (let i = 1; i <= totalQuestions; i++) {
+                const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
+                const resultElement = document.getElementById(`result${i}`);
+                if (selectedAnswer) {
+                    if (selectedAnswer.value === quizData[i - 1].correct) {
+                        resultElement.textContent = "Đúng!";
+                        resultElement.className = "correct";
+                        score++;
+                    } else {
+                        resultElement.textContent = `Sai! Đáp án đúng là: ${quizData[i - 1].correct}`;
+                        resultElement.className = "incorrect";
+                    }
+                } else {
+                    resultElement.textContent = "Chưa chọn đáp án!";
+                    resultElement.className = "incorrect";
+                }
+            }
+
+            const finalResult = document.getElementById("finalResult");
+            finalResult.textContent = `Điểm của bạn: ${score}/${totalQuestions}`;
+        }
+
+        // Gọi hàm để tạo bài kiểm tra khi trang tải
+        window.onload = generateQuiz;
+    </script>
+</body>
+</html>
